@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { ShieldCheck, Award, ArrowRight, CheckCircle2, Sparkles, Star } from 'lucide-react'
 import QMark from './QMark.jsx'
-import OfficeLightRays from './OfficeLightRays.jsx'
+import HeroBackground from './HeroBackground.jsx'
 import { pillars, site } from '../data/content.js'
 import { assetUrl } from '../utils/asset.js'
 
@@ -20,21 +20,9 @@ export default function Hero({ ready, onOpenConsultation }) {
   const springNormX = useSpring(mouseNormX, { stiffness: 65, damping: 20 })
   const springNormY = useSpring(mouseNormY, { stiffness: 65, damping: 20 })
 
-  // Fluid ambient light shifts in parallax
-  const auroraTopX = useTransform(springNormX, [-0.5, 0.5], [-50, 50])
-  const auroraTopY = useTransform(springNormY, [-0.5, 0.5], [-35, 35])
-  const auroraCenterX = useTransform(springNormX, [-0.5, 0.5], [60, -60])
-  const auroraCenterY = useTransform(springNormY, [-0.5, 0.5], [40, -40])
-
   // 3D holographic tilt on the visual portal
   const rotateX = useTransform(springNormY, [-0.5, 0.5], [6, -6])
   const rotateY = useTransform(springNormX, [-0.5, 0.5], [-7, 7])
-
-  // Mouse liquid spotlight coordinates
-  const spotX = useMotionValue(typeof window !== 'undefined' ? window.innerWidth * 0.5 : 600)
-  const spotY = useMotionValue(360)
-  const springSpotX = useSpring(spotX, { stiffness: 85, damping: 24 })
-  const springSpotY = useSpring(spotY, { stiffness: 85, damping: 24 })
 
   const handleMouseMove = (e) => {
     if (!sectionRef.current) return
@@ -43,8 +31,6 @@ export default function Hero({ ready, onOpenConsultation }) {
     const normY = (e.clientY - rect.top) / rect.height - 0.5
     mouseNormX.set(normX)
     mouseNormY.set(normY)
-    spotX.set(e.clientX - rect.left)
-    spotY.set(e.clientY - rect.top)
   }
 
   const handleTouchMove = (e) => {
@@ -55,8 +41,6 @@ export default function Hero({ ready, onOpenConsultation }) {
     const normY = (touch.clientY - rect.top) / rect.height - 0.5
     mouseNormX.set(normX)
     mouseNormY.set(normY)
-    spotX.set(touch.clientX - rect.left)
-    spotY.set(touch.clientY - rect.top)
   }
 
   const handleMouseLeave = () => {
@@ -80,48 +64,10 @@ export default function Hero({ ready, onOpenConsultation }) {
       onMouseLeave={handleMouseLeave}
       aria-label="QAF Alliance - Assurance • Innovation • Sustainability"
     >
-      {/* Office Light Rays: Soft golden beams falling from formal office window */}
-      <OfficeLightRays ready={ready} />
+      {/* Light rays + gold specks canvas background */}
+      <HeroBackground />
 
-      {/* Interactive Liquid Gold & Emerald Cursor Spotlight in Hero */}
-      <motion.div
-        className="hero-sov__mouse-spotlight"
-        style={{
-          x: springSpotX,
-          y: springSpotY
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Ambient Lighting & Royal Emerald Glows with Parallax Motion */}
-      <motion.div
-        className="hero-sov__aurora-top"
-        style={{ x: auroraTopX, y: auroraTopY }}
-        aria-hidden="true"
-      />
-      <motion.div
-        className="hero-sov__aurora-center"
-        style={{ x: auroraCenterX, y: auroraCenterY }}
-        aria-hidden="true"
-      />
-
-      {/* Floating Micro Gold Leaf Flakes */}
-      <div className="hero__particles" aria-hidden="true">
-        {[...Array(16)].map((_, i) => (
-          <span
-            key={i}
-            className="hero__particle"
-            style={{
-              top: `${(i * 14) % 94}%`,
-              left: `${(i * 19) % 96}%`,
-              animationDelay: `${i * 0.6}s`,
-              animationDuration: `${5 + (i % 4)}s`
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="wrap hero-sov__wrap">
+      <div className="wrap hero-sov__wrap" style={{ position: 'relative', zIndex: 10 }}>
         {/* Top Royal Accreditation Seal Pill */}
         <motion.div
           className="hero-sov__seal"
