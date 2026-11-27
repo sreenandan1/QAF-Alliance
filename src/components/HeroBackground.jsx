@@ -1,14 +1,15 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * HeroBackground — "Light rays + gold specks"
+ * HeroBackground — "45° Diagonal Shimmer Bands (Liquid Gold & Emerald Silk)"
  *
- * Premium, calm, and clean canvas-based background for QAF Alliance.
- * Theme:
- * - Dark green & gold vertical gradient (#0a3326 to #041a12)
- * - Volumetric light rays with top radial halo leaning toward cursor/drift
- * - Drifting, twinkling gold specks with gentle cursor repel
- * - Bottom emerald radial glow & subtle vignette overlay
+ * Sovereign Luxury Architecture for QAF Alliance:
+ * - 45° diagonal sweeping ribbons (top-left to bottom-right)
+ * - Flowing S-curve cubic splines evoking haute-horlogerie brushed gold & liquid silk
+ * - Rhythmic light caustics sweeping along the ribbon crests
+ * - Interactive spring-damped cursor flex
+ * - Drifting starlight gold specks that illuminate as the shimmer passes
+ * - Central contrast vignette ensuring 100% headline legibility
  */
 export default function HeroBackground({ className = '' }) {
   const canvasRef = useRef(null)
@@ -24,12 +25,12 @@ export default function HeroBackground({ className = '' }) {
     let width = 0
     let height = 0
 
-    // Respect prefers-reduced-motion
+    // Accessibility: prefers-reduced-motion check
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     let reducedMotion = reducedMotionQuery.matches
 
-    // Specks pool: 70 total, 35 active when width < 768
-    const TOTAL_SPECKS = 70
+    // Specks: 32 on desktop, 18 on mobile
+    const TOTAL_SPECKS = 32
     const specks = []
 
     const initSpecks = (w, h) => {
@@ -38,23 +39,24 @@ export default function HeroBackground({ className = '' }) {
         specks.push({
           x: Math.random() * w,
           y: Math.random() * h,
-          r: 0.5 + Math.random() * 1.6, // radius 0.5 to 2.1
-          speed: 0.1 + Math.random() * 0.35, // upward speed 0.1 to 0.45 px per frame
+          r: 0.6 + Math.random() * 1.5,
+          speed: 0.12 + Math.random() * 0.28,
           phase: Math.random() * Math.PI * 2,
-          ox: 0,
-          oy: 0
+          pulseSpeed: 0.015 + Math.random() * 0.025,
+          vx: 0,
+          vy: 0
         })
       }
     }
 
-    // Pointer state
+    // Pointer state with smooth spring physics
     let hasPointer = false
     let rawX = 0
     let rawY = 0
     let sx = 0
     let sy = 0
 
-    // Resize handling with devicePixelRatio cap at 2
+    // Canvas resize with retina DPR cap at 2
     const handleResize = () => {
       if (!canvas) return
       const parent = canvas.parentElement || canvas
@@ -79,7 +81,7 @@ export default function HeroBackground({ className = '' }) {
 
     handleResize()
 
-    // Pointer listeners on window
+    // Pointer tracking on window
     const handlePointerMove = (e) => {
       if (width < 768) return
       const rect = canvas.getBoundingClientRect()
@@ -97,167 +99,287 @@ export default function HeroBackground({ className = '' }) {
     document.addEventListener('mouseleave', handlePointerLeave)
     window.addEventListener('pointercancel', handlePointerLeave)
 
-    // Render single frame at timestamp t
+    // Three Curated 45° Diagonal Silk Ribbons
+    const RIBBONS = [
+      {
+        id: 'primary-gold',
+        offsetNorm: 0.0, // Center diagonal
+        width: 260,
+        speed: 0.00045,
+        causticSpeed: 0.00028,
+        phase: 0.0,
+        waveAmp: 38,
+        baseAlpha: 0.22,
+        r: 236,
+        g: 214,
+        b: 150 // Sovereign Champagne Gold
+      },
+      {
+        id: 'secondary-amber',
+        offsetNorm: -0.22, // Offset toward top-right
+        width: 210,
+        speed: 0.00038,
+        causticSpeed: 0.00022,
+        phase: 2.1,
+        waveAmp: 28,
+        baseAlpha: 0.16,
+        r: 218,
+        g: 185,
+        b: 105 // Warm Gilded Amber
+      },
+      {
+        id: 'subsurface-emerald',
+        offsetNorm: 0.24, // Offset toward bottom-left
+        width: 300,
+        speed: 0.00032,
+        causticSpeed: 0.00018,
+        phase: 4.3,
+        waveAmp: 32,
+        baseAlpha: 0.20,
+        r: 34,
+        g: 130,
+        b: 92 // Imperial Emerald Glow
+      }
+    ]
+
+    // Render single frame at timestamp t (ms)
     const renderFrame = (t) => {
       if (!ctx || width === 0 || height === 0) return
 
-      const isUnder768 = width < 768
-      const speckCount = isUnder768 ? 35 : 70
+      const isMobile = width < 768
+      const activeSpecks = isMobile ? 18 : 32
 
-      // Cursor position: smoothed or automatic drift
+      // Cursor target position with automatic harmonic drift fallback
       let targetX = rawX
       let targetY = rawY
 
-      if (!hasPointer || isUnder768) {
-        targetX = width * (0.5 + 0.25 * Math.sin(t * 0.0003))
-        targetY = height * (0.5 + 0.15 * Math.cos(t * 0.00037))
+      if (!hasPointer || isMobile) {
+        targetX = width * (0.5 + 0.22 * Math.sin(t * 0.0003))
+        targetY = height * (0.5 + 0.16 * Math.cos(t * 0.00037))
       }
 
-      sx += (targetX - sx) * 0.1
-      sy += (targetY - sy) * 0.1
+      // Smooth spring lerp
+      sx += (targetX - sx) * 0.05
+      sy += (targetY - sy) * 0.05
 
       const pointerX = sx
       const pointerY = sy
 
+      // Cursor displacement influence relative to center
+      const normCursorX = (pointerX - width * 0.5) / (width * 0.5)
+      const normCursorY = (pointerY - height * 0.5) / (height * 0.5)
+
       // ==========================================
-      // 1. BASE GRADIENT BACKGROUND
-      // Vertical gradient from #0a3326 (top) to #041a12 (bottom)
+      // 1. BASE CANOPY GRADIENT
+      // Royal Deep Emerald: #0a3326 (top) -> #041a12 (bottom)
       // ==========================================
       const bgGrad = ctx.createLinearGradient(0, 0, 0, height)
       bgGrad.addColorStop(0, '#0a3326')
+      bgGrad.addColorStop(0.55, '#07241b')
       bgGrad.addColorStop(1, '#041a12')
       ctx.fillStyle = bgGrad
       ctx.fillRect(0, 0, width, height)
 
       // ==========================================
-      // 2. EFFECT 1: LIGHT RAYS
+      // 2. 45° DIAGONAL SHIMMER BANDS (LIQUID SILK)
       // ==========================================
-      const ox = width * 0.5 + (pointerX - width * 0.5) * 0.15
-      const oy = -30
+      ctx.save()
+      ctx.globalCompositeOperation = 'screen'
 
-      // Soft halo at the origin: radial gradient, radius H * 0.7, from rgba(236,214,150,0.2) to 0
-      const haloRadius = height * 0.7
-      const haloGrad = ctx.createRadialGradient(ox, oy, 0, ox, oy, haloRadius)
-      haloGrad.addColorStop(0, 'rgba(236, 214, 150, 0.2)')
-      haloGrad.addColorStop(1, 'rgba(236, 214, 150, 0)')
-      ctx.fillStyle = haloGrad
-      ctx.fillRect(0, 0, width, height)
+      // Diagonal vector: 45 degrees from top-left (-20% margin) to bottom-right (120% margin)
+      const diagStartX = -width * 0.2
+      const diagStartY = -height * 0.2
+      const diagEndX = width * 1.2
+      const diagEndY = height * 1.2
 
-      // Draw 8 beams with globalCompositeOperation = "lighter"
-      ctx.globalCompositeOperation = 'lighter'
-      const L = height * 1.25
+      // Normal perpendicular vector to 45° diagonal
+      const diagDx = diagEndX - diagStartX
+      const diagDy = diagEndY - diagStartY
+      const diagLen = Math.hypot(diagDx, diagDy)
+      const unitDx = diagDx / diagLen
+      const unitDy = diagDy / diagLen
 
-      for (let i = 0; i < 8; i++) {
-        const angle =
-          -0.8 +
-          i * 0.23 +
-          Math.sin(t * 0.0004 + i * 1.3) * 0.05 +
-          ((pointerX - width * 0.5) / width) * 0.3
+      // Perpendicular normal (pointing toward upper-right / lower-left)
+      const normNx = -unitDy
+      const normNy = unitDx
 
-        const w = Math.tan(0.03 + 0.035 * ((i * 37) % 5) / 4) * L
+      const SEGMENTS = 28
 
-        // Far end center
-        const cx = ox + Math.sin(angle) * L
-        const cy = oy + Math.cos(angle) * L
+      for (let b = 0; b < RIBBONS.length; b++) {
+        const ribbon = RIBBONS[b]
 
-        // Perpendicular unit vector
-        const nx = Math.cos(angle)
-        const ny = -Math.sin(angle)
+        // Lateral offset distance across diagonal
+        const lateralOffset = ribbon.offsetNorm * (width * 0.45)
 
-        // Triangle vertices
-        const p1x = cx - nx * w
-        const p1y = cy - ny * w
-        const p2x = cx + nx * w
-        const p2y = cy + ny * w
+        // Rhythmic caustic shimmer sweep along ribbon length (0 to 1)
+        const shimmerCycle = (t * ribbon.causticSpeed + ribbon.phase) % 1.6 - 0.3
 
-        // Linear gradient along its length
-        const beamGrad = ctx.createLinearGradient(ox, oy, cx, cy)
-        const startAlpha = 0.1 + 0.05 * Math.sin(t * 0.0007 + i)
-        beamGrad.addColorStop(0, `rgba(236, 214, 150, ${startAlpha})`)
-        beamGrad.addColorStop(1, 'rgba(236, 214, 150, 0)')
+        // Calculate ribbon spline nodes
+        const topVertices = []
+        const bottomVertices = []
+        const caustics = []
 
+        for (let i = 0; i <= SEGMENTS; i++) {
+          const u = i / SEGMENTS
+
+          // Base point along 45° diagonal axis
+          const baseX = diagStartX + u * diagDx + normNx * lateralOffset
+          const baseY = diagStartY + u * diagDy + normNy * lateralOffset
+
+          // Dynamic fluid S-curve wave displacement
+          const wavePhase = u * Math.PI * 2.2 + t * ribbon.speed + ribbon.phase
+          const waveDisplacement =
+            Math.sin(wavePhase) * ribbon.waveAmp * (isMobile ? 0.6 : 1)
+
+          // Cursor interactive flex: pull ribbon gently toward cursor
+          const cursorWeight = Math.sin(u * Math.PI) // Maximum flex in the middle
+          const cursorFlex =
+            (normCursorX * normNx + normCursorY * normNy) * 45 * cursorWeight
+
+          const totalDisplacement = waveDisplacement + (isMobile ? 0 : cursorFlex)
+
+          const centerX = baseX + normNx * totalDisplacement
+          const centerY = baseY + normNy * totalDisplacement
+
+          // Ribbon width with tapered ends
+          const taper = Math.sin(u * Math.PI)
+          const halfWidth = (ribbon.width * 0.5 * (0.65 + 0.35 * taper)) * (isMobile ? 0.75 : 1)
+
+          topVertices.push({
+            x: centerX - normNx * halfWidth,
+            y: centerY - normNy * halfWidth
+          })
+
+          bottomVertices.push({
+            x: centerX + normNx * halfWidth,
+            y: centerY + normNy * halfWidth
+          })
+
+          // Calculate shimmer caustic intensity at this node
+          const distToShimmer = Math.abs(u - shimmerCycle)
+          let causticInt = 0
+          if (distToShimmer < 0.22) {
+            causticInt = Math.pow(Math.cos((distToShimmer / 0.22) * (Math.PI * 0.5)), 2)
+          }
+          caustics.push(causticInt)
+        }
+
+        // Draw the fluid silk ribbon with soft feathering
         ctx.beginPath()
-        ctx.moveTo(ox, oy)
-        ctx.lineTo(p1x, p1y)
-        ctx.lineTo(p2x, p2y)
+        ctx.moveTo(topVertices[0].x, topVertices[0].y)
+
+        // Top edge curve
+        for (let i = 1; i < topVertices.length; i++) {
+          const prev = topVertices[i - 1]
+          const curr = topVertices[i]
+          const midX = (prev.x + curr.x) * 0.5
+          const midY = (prev.y + curr.y) * 0.5
+          ctx.quadraticCurveTo(prev.x, prev.y, midX, midY)
+        }
+        ctx.lineTo(topVertices[topVertices.length - 1].x, topVertices[topVertices.length - 1].y)
+
+        // Connect to bottom edge in reverse
+        ctx.lineTo(bottomVertices[bottomVertices.length - 1].x, bottomVertices[bottomVertices.length - 1].y)
+        for (let i = bottomVertices.length - 2; i >= 0; i--) {
+          const prev = bottomVertices[i + 1]
+          const curr = bottomVertices[i]
+          const midX = (prev.x + curr.x) * 0.5
+          const midY = (prev.y + curr.y) * 0.5
+          ctx.quadraticCurveTo(prev.x, prev.y, midX, midY)
+        }
         ctx.closePath()
 
-        ctx.fillStyle = beamGrad
+        // Create linear gradient along ribbon's diagonal length
+        const ribbonGrad = ctx.createLinearGradient(
+          diagStartX,
+          diagStartY,
+          diagEndX,
+          diagEndY
+        )
+
+        const baseA = ribbon.baseAlpha
+        // Modulate alpha across the ribbon length with travelling shimmer peak
+        ribbonGrad.addColorStop(0, `rgba(${ribbon.r}, ${ribbon.g}, ${ribbon.b}, 0)`)
+        ribbonGrad.addColorStop(
+          0.2,
+          `rgba(${ribbon.r}, ${ribbon.g}, ${ribbon.b}, ${baseA * 0.45})`
+        )
+        ribbonGrad.addColorStop(
+          0.5,
+          `rgba(${ribbon.r}, ${ribbon.g}, ${ribbon.b}, ${baseA * 1.0})`
+        )
+        ribbonGrad.addColorStop(
+          0.8,
+          `rgba(${ribbon.r}, ${ribbon.g}, ${ribbon.b}, ${baseA * 0.55})`
+        )
+        ribbonGrad.addColorStop(1, `rgba(${ribbon.r}, ${ribbon.g}, ${ribbon.b}, 0)`)
+
+        ctx.fillStyle = ribbonGrad
         ctx.fill()
+
+        // Draw radiant high-frequency caustic crest highlight along the spine
+        ctx.beginPath()
+        for (let i = 0; i < topVertices.length; i++) {
+          const midX = (topVertices[i].x + bottomVertices[i].x) * 0.5
+          const midY = (topVertices[i].y + bottomVertices[i].y) * 0.5
+          if (i === 0) ctx.moveTo(midX, midY)
+          else ctx.lineTo(midX, midY)
+        }
+
+        ctx.lineWidth = 4 + 14 * Math.max(...caustics)
+        const spineGrad = ctx.createLinearGradient(diagStartX, diagStartY, diagEndX, diagEndY)
+        const shimmerPeakA = Math.min(baseA * 1.8 + Math.max(...caustics) * 0.28, 0.45)
+
+        spineGrad.addColorStop(0, `rgba(255, 246, 215, 0)`)
+        spineGrad.addColorStop(0.35, `rgba(255, 246, 215, ${shimmerPeakA * 0.4})`)
+        spineGrad.addColorStop(0.5, `rgba(255, 246, 215, ${shimmerPeakA})`)
+        spineGrad.addColorStop(0.65, `rgba(255, 246, 215, ${shimmerPeakA * 0.4})`)
+        spineGrad.addColorStop(1, `rgba(255, 246, 215, 0)`)
+
+        ctx.strokeStyle = spineGrad
+        ctx.stroke()
       }
 
-      // Reset globalCompositeOperation to "source-over" afterward
-      ctx.globalCompositeOperation = 'source-over'
-
       // ==========================================
-      // 3. BOTTOM GREEN GLOW AND SPECKS
+      // 3. DRIFTING STARLIGHT GOLD SPECKS
       // ==========================================
-      // Soft green glow at the bottom center: radial gradient from rgba(30,120,85,0.25) to 0, radius H
-      const greenGlow = ctx.createRadialGradient(
-        width * 0.5,
-        height,
-        0,
-        width * 0.5,
-        height,
-        height
-      )
-      greenGlow.addColorStop(0, 'rgba(30, 120, 85, 0.25)')
-      greenGlow.addColorStop(1, 'rgba(30, 120, 85, 0)')
-      ctx.fillStyle = greenGlow
-      ctx.fillRect(0, 0, width, height)
-
-      // Gold specks
-      for (let i = 0; i < speckCount; i++) {
+      for (let i = 0; i < activeSpecks; i++) {
         const s = specks[i]
 
-        // Upward speed and horizontal sway
         s.y -= s.speed
-        s.x += Math.sin(t * 0.0008 + s.phase) * 0.25
+        s.x += Math.sin(t * 0.0008 + s.phase) * 0.22
 
-        // Top exit wrap
-        if (s.y < -10) {
-          s.y = height + 10
+        // Screen wrap
+        if (s.y < -15) {
+          s.y = height + 15
           s.x = Math.random() * width
         }
+        if (s.x < -15) s.x = width + 15
+        else if (s.x > width + 15) s.x = -15
 
-        // Horizontal screen wrap
-        if (s.x < 0) s.x += width
-        else if (s.x > width) s.x -= width
+        // Check proximity to 45° diagonal axis
+        // Projection along perpendicular normal
+        const dFromDiag = Math.abs((s.x - width * 0.5) * normNx + (s.y - height * 0.5) * normNy)
+        const diagProximity = Math.max(0, 1 - dFromDiag / (width * 0.35))
 
-        // Cursor repel (active on screens >= 768px)
-        if (!isUnder768) {
-          const dx = s.x - pointerX
-          const dy = s.y - pointerY
-          const d = Math.hypot(dx, dy)
+        // Gentle sinusoidal twinkle
+        const pulse = 0.5 + 0.5 * Math.sin(t * s.pulseSpeed + s.phase)
+        const a = (0.25 + 0.45 * pulse) * (0.6 + 0.6 * diagProximity)
 
-          if (d < 150 && d > 0.0001) {
-            const f = 1 - d / 150
-            s.ox += (dx / d) * f * 0.9
-            s.oy += (dy / d) * f * 0.9
-          }
-        }
-
-        s.ox *= 0.95
-        s.oy *= 0.95
-        s.x += s.ox
-        s.y += s.oy
-
-        // Twinkle: a = 0.3 + 0.5 * (0.5 + 0.5 * sin(t * 0.002 + phase))
-        const a = 0.3 + 0.5 * (0.5 + 0.5 * Math.sin(t * 0.002 + s.phase))
-
-        // Draw two circles per speck:
-        // 1. Soft glow (radius r * 4, alpha a * 0.14, rgb 236,214,150)
+        // Soft outer glow
         ctx.beginPath()
-        ctx.arc(s.x, s.y, s.r * 4, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(236, 214, 150, ${a * 0.14})`
+        ctx.arc(s.x, s.y, s.r * 3.5, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(236, 214, 150, ${a * 0.16})`
         ctx.fill()
 
-        // 2. Core (radius r, alpha a, rgb 255,240,190)
+        // Brilliant core
         ctx.beginPath()
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255, 240, 190, ${a})`
+        ctx.fillStyle = `rgba(255, 245, 205, ${a * 0.95})`
         ctx.fill()
       }
+
+      ctx.restore()
     }
 
     // Main animation loop
@@ -272,7 +394,7 @@ export default function HeroBackground({ className = '' }) {
       animId = requestAnimationFrame(loop)
     }
 
-    // Handle visibilitychange: pause when hidden, resume when visible
+    // Pause on hidden tabs; resume on visible
     const handleVisibilityChange = () => {
       if (document.hidden) {
         if (animId) {
@@ -288,7 +410,6 @@ export default function HeroBackground({ className = '' }) {
 
     document.addEventListener('visibilitychange', handleVisibilityChange)
 
-    // Listen to reduced motion changes dynamically
     const handleMotionChange = (e) => {
       reducedMotion = e.matches
       if (reducedMotion) {
@@ -343,7 +464,7 @@ export default function HeroBackground({ className = '' }) {
           display: 'block'
         }}
       />
-      {/* Subtle vignette overlay so edges stay slightly darker and center headline stays fully readable */}
+      {/* Optical contrast vignette: preserves 100% legibility of headline & CTAs */}
       <div
         className="hero-background__vignette"
         style={{
@@ -351,7 +472,7 @@ export default function HeroBackground({ className = '' }) {
           inset: 0,
           pointerEvents: 'none',
           background:
-            'radial-gradient(ellipse at 50% 45%, rgba(6,35,26,0.55) 0%, transparent 55%)'
+            'radial-gradient(ellipse at 50% 45%, rgba(6,35,26,0.52) 0%, transparent 55%)'
         }}
       />
     </div>
