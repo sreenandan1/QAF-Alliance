@@ -30,11 +30,15 @@ export default function Projects() {
             <article
               className={`proj-lux proj-lux--${p.tone}`}
               key={p.title}
-              style={{ top: `calc(5rem + ${n * 24}px)` }}
+              style={{
+                top: `calc(5.2rem + ${n * 26}px)`,
+                zIndex: n + 1
+              }}
             >
               {/* Narrative Content */}
               <div className="proj-lux__text">
                 <div className="proj-lux__meta">
+                  <span className="proj-lux__counter-pill">Case {String(n + 1).padStart(2, '0')} / 04</span>
                   <span className="proj-lux__sector">{p.sector}</span>
                   <span className="proj-lux__badge-exp">{p.caseType}</span>
                 </div>
