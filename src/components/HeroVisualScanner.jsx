@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { ShieldCheck, Award, Scan, CheckCircle2, Crosshair, Sparkles, Activity } from 'lucide-react'
+import { assetUrl } from '../utils/asset.js'
 
 export default function HeroVisualScanner({ ready }) {
   const containerRef = useRef(null)
@@ -91,7 +92,7 @@ export default function HeroVisualScanner({ ready }) {
           <div className="hero-scanner__stage">
             {/* Primary Base Image */}
             <img
-              src="/images/hero-luxury.jpg"
+              src={assetUrl('images/hero-luxury.jpg')}
               alt="QAF Alliance food science and quality assurance laboratory"
               className={`hero-scanner__img ${imgLoaded ? 'is-loaded' : ''}`}
               onLoad={() => setImgLoaded(true)}
@@ -121,7 +122,7 @@ export default function HeroVisualScanner({ ready }) {
             >
               {/* High-contrast scientific image with gold spectrum grade */}
               <img
-                src="/images/hero-luxury.jpg"
+                src={assetUrl('images/hero-luxury.jpg')}
                 alt="Spectral quality scan view"
                 className="hero-scanner__img-spectral"
               />

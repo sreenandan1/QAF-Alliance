@@ -1,3 +1,5 @@
+import { assetUrl } from '../utils/asset.js'
+
 // =============================================================================
 // QAF ALLIANCE — OFFICIAL WEBSITE CONTENT & BUSINESS PROFILE
 // Tagline: Assurance • Innovation • Sustainability
@@ -89,7 +91,7 @@ export const pillars = [
     title: 'Assurance',
     subtitle: 'Management Systems & Regulatory Compliance',
     text: 'Strengthening management systems, implementing HACCP/ISO frameworks, and ensuring total audit readiness to protect brand equity and ensure regulatory compliance.',
-    image: '/images/service-safety.jpg',
+    image: assetUrl('images/service-safety.jpg'),
     fallback: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80',
     tags: ['HACCP Protocol', 'ISO 22000 / FSMS', 'Audit Defense', 'Regulatory Compliance']
   },
@@ -98,7 +100,7 @@ export const pillars = [
     title: 'Innovation',
     subtitle: 'Modern Technologies & Practical Solutions',
     text: 'Embracing technical knowledge, real-world industry experience, digital audit solutions, and pragmatic problem-solving to improve operational performance.',
-    image: '/images/service-rd.jpg',
+    image: assetUrl('images/service-rd.jpg'),
     fallback: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=800&q=80',
     tags: ['Operational Excellence', 'Process Improvement', 'Digital Audits', 'Continuous Improvement']
   },
@@ -107,7 +109,7 @@ export const pillars = [
     title: 'Sustainability',
     subtitle: 'Responsible Business & Environmental Stewardship',
     text: 'Supporting organisations in adopting responsible environmental practices, plastic elimination, food waste reduction, and sustainable operational models.',
-    image: '/images/service-sustainability.jpg',
+    image: assetUrl('images/service-sustainability.jpg'),
     fallback: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=800&q=80',
     tags: ['Plastic Reduction', 'Food Waste Diversion', 'Resource Efficiency', 'Environmental Stewardship']
   }
@@ -140,7 +142,7 @@ export const services = [
       'Food labelling and nutritional information review'
     ],
     for: 'Food manufacturers, processors, catering companies & food service establishments',
-    image: '/images/service-safety.jpg',
+    image: assetUrl('images/service-safety.jpg'),
     fallback: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
     stat: '100%',
     statLabel: 'Regulatory & Compliance Focus'
@@ -166,7 +168,7 @@ export const services = [
       'Customer experience and service quality assessments'
     ],
     for: 'Enterprises seeking operational excellence, consistent quality & SOP compliance',
-    image: '/images/service-rd.jpg',
+    image: assetUrl('images/service-rd.jpg'),
     fallback: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=80',
     stat: '15+ Yrs',
     statLabel: 'Technical & Operational Heritage'
@@ -194,7 +196,7 @@ export const services = [
       'Technical and Professional Development Programmes'
     ],
     for: 'Supervisors, food handlers, corporate QA leads & kitchen brigades',
-    image: '/images/service-training.jpg',
+    image: assetUrl('images/service-training.jpg'),
     fallback: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80',
     stat: 'Tailored',
     statLabel: 'On-Site Corporate & Workshop Formats'
@@ -220,7 +222,7 @@ export const services = [
       'Environmental studies and research'
     ],
     for: 'Hotels, resorts, commercial kitchens & sustainability-focused organisations',
-    image: '/images/service-sustainability.jpg',
+    image: assetUrl('images/service-sustainability.jpg'),
     fallback: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=1200&q=80',
     stat: '112,000+',
     statLabel: 'PET Bottles Diverted (Experience Track Record)'
@@ -244,7 +246,7 @@ export const services = [
       'Digital audit reporting and corrective action tracking solutions'
     ],
     for: 'Multi-outlet groups, luxury hospitality, commissary kitchens & suppliers',
-    image: '/images/service-esg.jpg',
+    image: assetUrl('images/service-esg.jpg'),
     fallback: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
     stat: 'Digital',
     statLabel: 'Real-Time Reporting & CAPA Tracking'
@@ -605,7 +607,7 @@ export const projects = [
     ],
     metric: 'Full FSMS',
     metricLabel: 'HACCP & Regulatory Compliance Implemented',
-    image: '/images/service-safety.jpg',
+    image: assetUrl('images/service-safety.jpg'),
     fallback: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80',
     timeline: 'Multi-Outlet Rollout'
   },
@@ -625,7 +627,7 @@ export const projects = [
     ],
     metric: '112,000+',
     metricLabel: 'Single-Use PET Bottles Eliminated',
-    image: '/images/service-sustainability.jpg',
+    image: assetUrl('images/service-sustainability.jpg'),
     fallback: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=1000&q=80',
     timeline: 'Track Record Achievement'
   },
@@ -647,7 +649,7 @@ export const projects = [
     ],
     metric: 'BRCGS',
     metricLabel: 'Gap Assessment & Audit Readiness Achieved',
-    image: '/images/project-bakery.jpg',
+    image: assetUrl('images/project-bakery.jpg'),
     fallback: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80',
     timeline: 'Manufacturing Elevation'
   },
@@ -669,7 +671,7 @@ export const projects = [
     ],
     metric: 'LQA Standards',
     metricLabel: 'Service Excellence & Mystery Audits',
-    image: '/images/project-hotel.jpg',
+    image: assetUrl('images/project-hotel.jpg'),
     fallback: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80',
     timeline: 'Continuous Assessment'
   }
@@ -698,7 +700,7 @@ export const team = [
       'Operational Excellence and Continuous Improvement',
       'Food Safety Training and Professional Development'
     ],
-    image: '/images/team-aisha.jpg',
+    image: assetUrl('images/team-aisha.jpg'),
     fallback: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'
   },
   {
@@ -715,7 +717,7 @@ export const team = [
       'Audit methodology and reporting',
       'Multi-location assessment programmes'
     ],
-    image: '/images/team-daniel.jpg',
+    image: assetUrl('images/team-daniel.jpg'),
     fallback: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80'
   }
 ]

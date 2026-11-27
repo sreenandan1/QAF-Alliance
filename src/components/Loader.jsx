@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import { assetUrl } from '../utils/asset.js'
 
 export default function Loader({ done }) {
   return (
@@ -21,12 +22,12 @@ export default function Loader({ done }) {
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             >
               <img
-                src="/images/qaf-alliance-logo-transparent.png"
+                src={assetUrl('images/qaf-alliance-logo-transparent.png')}
                 alt="QAF ALLIANCE"
                 className="loader__logo-img"
                 onError={(e) => {
                   e.target.onerror = null
-                  e.target.src = '/images/qaf-alliance-logo.jpg'
+                  e.target.src = assetUrl('images/qaf-alliance-logo.jpg')
                 }}
               />
               <div className="loader__shimmer" />

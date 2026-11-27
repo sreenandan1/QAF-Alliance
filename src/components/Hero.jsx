@@ -3,6 +3,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { ShieldCheck, Award, ArrowRight, CheckCircle2, Sparkles, Star } from 'lucide-react'
 import QMark from './QMark.jsx'
 import { pillars, site } from '../data/content.js'
+import { assetUrl } from '../utils/asset.js'
 
 const lineOneWords = ['Empowering', 'Businesses', 'Through']
 const lineTwoWords = ['Quality,', 'Expertise', '&', 'Sustainable', 'Solutions.']
@@ -282,7 +283,7 @@ export default function Hero({ ready, onOpenConsultation }) {
           >
             <div className="hero-sov__portal-frame">
               <img
-                src="/images/hero-luxury.jpg"
+                src={assetUrl('images/hero-luxury.jpg')}
                 alt="QAF Alliance food science, quality assurance and sustainability consulting"
                 className={`hero-sov__portal-img ${imgLoaded ? 'is-loaded' : ''}`}
                 onLoad={() => setImgLoaded(true)}
@@ -307,12 +308,12 @@ export default function Hero({ ready, onOpenConsultation }) {
               >
                 <div className="plaque-inner">
                   <img
-                    src="/images/qaf-alliance-logo-transparent.png"
+                    src={assetUrl('images/qaf-alliance-logo-transparent.png')}
                     alt="QAF ALLIANCE"
                     className="plaque-logo-img"
                     onError={(e) => {
                       e.target.onerror = null
-                      e.target.src = '/images/qaf-alliance-logo.jpg'
+                      e.target.src = assetUrl('images/qaf-alliance-logo.jpg')
                     }}
                   />
                   <div className="plaque-gold-glow" aria-hidden="true" />

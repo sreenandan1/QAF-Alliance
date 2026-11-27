@@ -13,6 +13,7 @@ import {
   ArrowRight
 } from 'lucide-react'
 import Reveal from './Reveal.jsx'
+import { assetUrl } from '../utils/asset.js'
 import { about, pillars } from '../data/content.js'
 
 const valueIcons = [Award, ShieldCheck, Sparkles, TrendingUp, Leaf, Users]
@@ -40,7 +41,7 @@ export default function About() {
           <Reveal className="about__visual-wrap" delay={0.1}>
           <div className="about__visual-frame">
             <img
-              src="/images/about-luxury.jpg"
+              src={assetUrl('images/about-luxury.jpg')}
               alt="QAF Alliance professional food quality & assurance consultancy"
               className="about__img"
               onError={(e) => {
