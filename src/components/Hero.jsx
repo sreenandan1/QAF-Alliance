@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { ShieldCheck, Award, ArrowRight, CheckCircle2, Sparkles, Star } from 'lucide-react'
 import QMark from './QMark.jsx'
+import OfficeLightRays from './OfficeLightRays.jsx'
 import { pillars, site } from '../data/content.js'
 import { assetUrl } from '../utils/asset.js'
 
@@ -79,6 +80,9 @@ export default function Hero({ ready, onOpenConsultation }) {
       onMouseLeave={handleMouseLeave}
       aria-label="QAF Alliance - Assurance • Innovation • Sustainability"
     >
+      {/* Office Light Rays: Soft golden beams falling from formal office window */}
+      <OfficeLightRays ready={ready} />
+
       {/* Interactive Liquid Gold & Emerald Cursor Spotlight in Hero */}
       <motion.div
         className="hero-sov__mouse-spotlight"
