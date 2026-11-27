@@ -33,6 +33,7 @@ export default function App() {
     id = requestAnimationFrame(raf)
     return () => { cancelAnimationFrame(id); lenis.destroy() }
   }, [])
+  
 
   // Intro screen reveal
   useEffect(() => {
