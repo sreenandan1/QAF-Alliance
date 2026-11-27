@@ -106,6 +106,7 @@ export default function Training({ onOpenConsultation }) {
                 type="button"
                 className="train__search-clear"
                 onClick={() => setSearchQuery('')}
+                aria-label="Clear search"
               >
                 &times;
               </button>
