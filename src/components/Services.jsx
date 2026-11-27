@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
   ShieldCheck,
@@ -9,7 +9,11 @@ import {
   PackageCheck,
   Check,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
+  Building2,
+  Layers
 } from 'lucide-react'
 import Reveal from './Reveal.jsx'
 import { services } from '../data/content.js'
@@ -25,6 +29,8 @@ const icons = {
 
 export default function Services({ onOpenConsultation }) {
   const [activeIdx, setActiveIdx] = useState(0)
+  const tabsContainerRef = useRef(null)
+
   const current = services[activeIdx]
   const Icon = icons[current.icon] || ShieldCheck
 
@@ -35,13 +41,36 @@ export default function Services({ onOpenConsultation }) {
     }
   }
 
+  const handlePrev = () => {
+    setActiveIdx((prev) => (prev === 0 ? services.length - 1 : prev - 1))
+  }
+
+  const handleNext = () => {
+    setActiveIdx((prev) => (prev === services.length - 1 ? 0 : prev + 1))
+  }
+
+  // Auto-scroll active tab into view on mobile/tablet
+  useEffect(() => {
+    if (tabsContainerRef.current) {
+      const activeEl = tabsContainerRef.current.querySelector('.is-active')
+      if (activeEl) {
+        activeEl.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        })
+      }
+    }
+  }, [activeIdx])
+
   return (
-    <section id="services" className="sec sec--dark services-sec">
+    <section id="services" className="sec sec--dark services-sec" aria-label="Our Services">
       <div className="wrap">
+        {/* Section Header */}
         <div className="sec-header-center">
           <Reveal className="sec-tag sec-tag--gold">
             <Sparkles size={14} />
-            <span>Our Comprehensive Services</span>
+            <span>Executive Practice Areas</span>
           </Reveal>
           <Reveal as="h2" className="h2 sec-title-center">
             Specialized Solutions in Food Safety, Quality & Sustainability.
@@ -51,9 +80,14 @@ export default function Services({ onOpenConsultation }) {
           </Reveal>
         </div>
 
-        <div className="svc-lux">
-          {/* Left: Interactive Navigation Tabs (All 6 Services) */}
-          <div className="svc-lux__tabs" role="tablist" aria-label="Services Navigation">
+        {/* Top Executive Practice Navigator Bar */}
+        <div className="svc-nav-wrap">
+          <div
+            ref={tabsContainerRef}
+            className="svc-nav-bar"
+            role="tablist"
+            aria-label="Services Navigation"
+          >
             {services.map((item, idx) => {
               const TabIcon = icons[item.icon] || ShieldCheck
               const isSelected = idx === activeIdx
@@ -62,110 +96,162 @@ export default function Services({ onOpenConsultation }) {
                   key={item.id}
                   role="tab"
                   aria-selected={isSelected}
-                  className={`svc-lux__tab ${isSelected ? 'is-active' : ''}`}
+                  className={`svc-nav-pill ${isSelected ? 'is-active' : ''}`}
                   onClick={() => setActiveIdx(idx)}
                 >
-                  <div className="svc-lux__tab-icon">
-                    <span className="svc-lux__tab-letter">{item.letter}</span>
-                  </div>
-                  <div className="svc-lux__tab-text">
-                    <span className="svc-lux__tab-tag">{item.tag}</span>
-                    <span className="svc-lux__tab-title">{item.title}</span>
-                  </div>
+                  <span className="svc-nav-pill__letter">{item.letter}</span>
+                  <TabIcon size={16} className="svc-nav-pill__icon" />
+                  <span className="svc-nav-pill__title">{item.title}</span>
                   {isSelected && (
                     <motion.div
-                      layoutId="svc-lux-active-bar"
-                      className="svc-lux__tab-bar"
-                      transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                      layoutId="svc-nav-active-pill"
+                      className="svc-nav-pill__indicator"
+                      transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                     />
                   )}
                 </button>
               )
             })}
           </div>
+        </div>
 
-          {/* Right: Immersive Visual & Details Panel */}
-          <div className="svc-lux__panel" role="tabpanel">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current.id}
-                className="svc-lux__card"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.35, ease: [0.2, 0.7, 0.2, 1] }}
-              >
-                {/* Visual Imagery Side with Gold Framing */}
-                <div className="svc-lux__visual">
-                  <img
-                    src={current.image}
-                    alt={current.title}
-                    className="svc-lux__img"
-                    onError={(e) => {
-                      e.target.onerror = null
-                      e.target.src = current.fallback
-                    }}
-                  />
-                  <div className="svc-lux__img-overlay" />
+        {/* Main Active Practice Dossier */}
+        <div className="svc-dossier-wrap">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.id}
+              className="svc-dossier"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ duration: 0.3, ease: [0.2, 0.7, 0.2, 1] }}
+            >
+              <div className="svc-dossier__grid">
+                {/* Column 1: Media, Key Metrics & Inquire Actions (Compact, Controlled Height) */}
+                <div className="svc-dossier__col-media">
+                  {/* Cinematic Framed Image */}
+                  <div className="svc-dossier__media-frame">
+                    <img
+                      src={current.image}
+                      alt={current.title}
+                      className="svc-dossier__img"
+                      onError={(e) => {
+                        e.target.onerror = null
+                        e.target.src = current.fallback
+                      }}
+                    />
+                    <div className="svc-dossier__img-overlay" />
 
-                  {/* Impact Metric Floating Badge */}
-                  <div className="svc-lux__metric-badge">
-                    <span className="svc-lux__metric-val">{current.stat}</span>
-                    <span className="svc-lux__metric-lbl">{current.statLabel}</span>
-                  </div>
-
-                  {/* Category Pill */}
-                  <div className="svc-lux__category-pill">
-                    <Icon size={16} />
-                    <span>Service {current.letter}</span>
-                  </div>
-                </div>
-
-                {/* Content Breakdown Side */}
-                <div className="svc-lux__content">
-                  <div className="svc-lux__header">
-                    <div className="svc-lux__icon-wrap">
-                      <Icon size={28} />
+                    {/* Category Stamp Badge */}
+                    <div className="svc-dossier__badge-top">
+                      <Icon size={14} />
+                      <span>Service {current.letter}</span>
                     </div>
-                    <div>
-                      <span className="svc-lux__small-tag">Service {current.letter} &bull; {current.tag}</span>
-                      <h3 className="svc-lux__title">{current.title}</h3>
+
+                    {/* Impact Metric Plaque */}
+                    <div className="svc-dossier__metric-plaque">
+                      <span className="svc-dossier__metric-val">{current.stat}</span>
+                      <span className="svc-dossier__metric-lbl">{current.statLabel}</span>
                     </div>
                   </div>
 
-                  <p className="svc-lux__summary">{current.summary}</p>
-
-                  <div className="svc-lux__deliverables">
-                    <p className="svc-lux__deliv-title">Our Services Include:</p>
-                    <ul className="svc-lux__list">
-                      {current.points.map((pt) => (
-                        <li key={pt} className="svc-lux__item">
-                          <Check size={14} className="svc-lux__check" />
-                          <span>{pt}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  {/* Tailored For Industry Audience */}
+                  <div className="svc-dossier__audience-box">
+                    <div className="svc-dossier__audience-header">
+                      <Building2 size={14} className="svc-dossier__audience-icon" />
+                      <span className="svc-dossier__audience-label">Tailored For:</span>
+                    </div>
+                    <p className="svc-dossier__audience-text">{current.for}</p>
                   </div>
 
-                  <div className="svc-lux__footer">
-                    <div className="svc-lux__target-box">
-                      <span className="svc-lux__for-label">Tailored For:</span>
-                      <span className="svc-lux__for-text">{current.for}</span>
-                    </div>
-
+                  {/* Direct Consultation Action Bar */}
+                  <div className="svc-dossier__action-box">
                     <button
                       type="button"
                       onClick={handleInquire}
-                      className="btn btn--gold btn--shimmer svc-lux__cta"
+                      className="btn btn--gold btn--shimmer svc-dossier__cta"
                     >
                       <span>Inquire About This Service</span>
                       <ArrowRight size={15} />
                     </button>
+                    <span className="svc-dossier__guarantee">
+                      Direct Expert Assessment &bull; UAE & GCC Compliance
+                    </span>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+
+                {/* Column 2: Scope of Work & Deliverables Matrix (Compact 2-Column Grid) */}
+                <div className="svc-dossier__col-body">
+                  {/* Practice Heading */}
+                  <div className="svc-dossier__header">
+                    <div className="svc-dossier__tag-row">
+                      <span className="svc-dossier__service-pill">Practice {current.letter}</span>
+                      <span className="svc-dossier__tag-text">{current.tag}</span>
+                    </div>
+                    <h3 className="svc-dossier__title">{current.title}</h3>
+                    <p className="svc-dossier__summary">{current.summary}</p>
+                  </div>
+
+                  {/* 2-Column Deliverables Matrix */}
+                  <div className="svc-dossier__scope">
+                    <div className="svc-dossier__scope-header">
+                      <div className="svc-dossier__scope-title-wrap">
+                        <Layers size={15} className="svc-dossier__scope-icon" />
+                        <h4 className="svc-dossier__scope-title">Key Focus Areas & Deliverables</h4>
+                      </div>
+                      <span className="svc-dossier__scope-count">
+                        {current.points.length} Core Capabilities
+                      </span>
+                    </div>
+
+                    <div className="svc-dossier__matrix">
+                      {current.points.map((pt, i) => (
+                        <div key={i} className="svc-dossier__matrix-item">
+                          <span className="svc-dossier__check-ring">
+                            <Check size={12} strokeWidth={2.6} />
+                          </span>
+                          <span className="svc-dossier__item-text">{pt}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bottom Practice Navigation Flow */}
+                  <div className="svc-dossier__footer-nav">
+                    <button
+                      type="button"
+                      onClick={handlePrev}
+                      className="svc-dossier__nav-btn"
+                      aria-label="Previous Practice"
+                    >
+                      <ChevronLeft size={16} />
+                      <span>Previous</span>
+                    </button>
+
+                    <div className="svc-dossier__counter">
+                      <span className="svc-dossier__counter-current">
+                        {String(activeIdx + 1).padStart(2, '0')}
+                      </span>
+                      <span className="svc-dossier__counter-div">/</span>
+                      <span className="svc-dossier__counter-total">
+                        {String(services.length).padStart(2, '0')}
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleNext}
+                      className="svc-dossier__nav-btn"
+                      aria-label="Next Practice"
+                    >
+                      <span>Next</span>
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>
