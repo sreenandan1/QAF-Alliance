@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="favGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#F5E7C2" />
+      <stop offset="50%" stopColor="#ECD08F" />
+      <stop offset="100%" stopColor="#C8A24A" />
+    </linearGradient>
+    <linearGradient id="favGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#4A8E5C" />
+      <stop offset="100%" stopColor="#2A5C37" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#0E2C1E" />
+  <rect x="1.5" y="1.5" width="61" height="61" rx="14.5" fill="none" stroke="rgba(236, 208, 143, 0.3)" stroke-width="1.5" />
+  <!-- Q -->
+  <circle cx="21" cy="27" r="10" fill="none" stroke="url(#favGold)" stroke-width="3.5" />
+  <path d="M27 33 Q30 38 34 37" fill="none" stroke="url(#favGold)" stroke-width="3.5" stroke-linecap="round" />
+  <!-- A & F hint -->
+  <path d="M33 37 L40 18 L47 37" fill="none" stroke="url(#favGold)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M49 18 L55 18" stroke="url(#favGold)" stroke-width="3.5" stroke-linecap="round" />
+  <!-- Leaf wave ribbon -->
+  <path d="M27 25 C33 20 41 22 47 28 C52 33 55 31 56 26" fill="none" stroke="url(#favGreen)" stroke-width="3" stroke-linecap="round" />
+  <!-- ALLIANCE bar -->
+  <rect x="15" y="47" width="34" height="2.5" rx="1.25" fill="url(#favGold)" />
+</svg>
