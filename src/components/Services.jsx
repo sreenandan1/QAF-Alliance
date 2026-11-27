@@ -80,13 +80,12 @@ export default function Services({ onOpenConsultation }) {
           </Reveal>
         </div>
 
-        {/* Top Executive Practice Navigator Bar */}
+        {/* Top Executive Practice Selector Grid (All 6 Practices Visible, Balanced, No Clipping) */}
         <div className="svc-nav-wrap">
           <div
-            ref={tabsContainerRef}
-            className="svc-nav-bar"
+            className="svc-nav-grid"
             role="tablist"
-            aria-label="Services Navigation"
+            aria-label="Services Practice Areas"
           >
             {services.map((item, idx) => {
               const TabIcon = icons[item.icon] || ShieldCheck
@@ -96,17 +95,29 @@ export default function Services({ onOpenConsultation }) {
                   key={item.id}
                   role="tab"
                   aria-selected={isSelected}
-                  className={`svc-nav-pill ${isSelected ? 'is-active' : ''}`}
+                  className={`svc-nav-card ${isSelected ? 'is-active' : ''}`}
                   onClick={() => setActiveIdx(idx)}
                 >
-                  <span className="svc-nav-pill__letter">{item.letter}</span>
-                  <TabIcon size={16} className="svc-nav-pill__icon" />
-                  <span className="svc-nav-pill__title">{item.title}</span>
+                  <div className="svc-nav-card__badge">
+                    <span className="svc-nav-card__letter">{item.letter}</span>
+                  </div>
+
+                  <div className="svc-nav-card__content">
+                    <span className="svc-nav-card__tag">
+                      Practice {item.letter} &bull; {item.tag}
+                    </span>
+                    <span className="svc-nav-card__title">{item.title}</span>
+                  </div>
+
+                  <div className="svc-nav-card__icon-wrap">
+                    <TabIcon size={17} className="svc-nav-card__icon" />
+                  </div>
+
                   {isSelected && (
                     <motion.div
-                      layoutId="svc-nav-active-pill"
-                      className="svc-nav-pill__indicator"
-                      transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                      layoutId="svc-nav-active-glow"
+                      className="svc-nav-card__glow-border"
+                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                     />
                   )}
                 </button>
