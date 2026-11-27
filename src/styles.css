@@ -777,15 +777,24 @@ h1, h2, h3, h4 {
    THREE PILLARS OF DISTINCTION (BOTTOM CARDS)
    ───────────────────────────────────────────────────────────── */
 
-.hero-sov__pillars {
+.hero-sov__pillars-wrap {
   position: relative;
   z-index: 2;
+  width: 100%;
+}
+
+.hero-sov__pillars {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.8rem;
   width: 100%;
   padding-top: 2.5rem;
   border-top: 1px solid rgba(197, 160, 89, 0.25);
+}
+
+.hero-sov__pillars-dots {
+  display: none;
 }
 
 .hero-sov__pillar-card {
@@ -1020,10 +1029,19 @@ h1, h2, h3, h4 {
   color: var(--ink);
 }
 
+.about__pillars-carousel-wrap {
+  position: relative;
+  width: 100%;
+}
+
 .pillars-lux {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.8rem;
+}
+
+.pillars-dots {
+  display: none;
 }
 
 .pillar-lux {
@@ -1135,6 +1153,10 @@ h1, h2, h3, h4 {
 .svc-nav-wrap {
   margin-bottom: 2.2rem;
   position: relative;
+}
+
+.svc-nav-mobile-bar {
+  display: none;
 }
 
 .svc-nav-grid {
@@ -1640,24 +1662,6 @@ h1, h2, h3, h4 {
 }
 
 @media (max-width: 640px) {
-  .svc-nav-grid {
-    grid-template-columns: 1fr;
-    gap: 0.6rem;
-  }
-  .svc-nav-card {
-    padding: 0.75rem 0.9rem;
-    gap: 0.75rem;
-  }
-  .svc-nav-card__badge {
-    width: 32px;
-    height: 32px;
-  }
-  .svc-nav-card__letter {
-    font-size: 0.95rem;
-  }
-  .svc-nav-card__title {
-    font-size: 0.88rem;
-  }
   .svc-dossier__col-media {
     padding: 1.25rem 1rem;
     gap: 1.1rem;
@@ -3092,9 +3096,6 @@ h1, h2, h3, h4 {
     padding: 1rem;
     border-radius: 14px;
   }
-  .pillars-lux {
-    grid-template-columns: 1fr;
-  }
   /* Training Programmes Responsive Mobile Architecture */
   .train__controls-row {
     flex-direction: column;
@@ -3733,40 +3734,287 @@ h1, h2, h3, h4 {
     gap: 1rem;
   }
 
-  /* Services Section 2-Column Compact Practice Selector on Mobile */
+  /* ─────────────────────────────────────────────────────────────
+     HERO THREE PILLARS — LUXURY MOBILE TOUCH CAROUSEL
+     ───────────────────────────────────────────────────────────── */
+  .hero-sov__pillars-wrap {
+    margin-top: 1.5rem;
+    position: relative;
+    width: 100%;
+  }
+  .hero-sov__pillars {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.85rem !important;
+    padding: 0.5rem 1rem 1rem !important;
+    margin: 0 -1rem !important;
+    scrollbar-width: none !important;
+    border-top: 1px solid rgba(197, 160, 89, 0.2);
+  }
+  .hero-sov__pillars::-webkit-scrollbar {
+    display: none !important;
+  }
+  .hero-sov__pillar-card {
+    flex: 0 0 84vw !important;
+    max-width: 340px !important;
+    scroll-snap-align: center;
+    padding: 1.35rem 1.25rem !important;
+    border-radius: 18px !important;
+    background: rgba(4, 24, 18, 0.8) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(197, 160, 89, 0.25) !important;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+  .hero-sov__pillar-card.is-active {
+    border-color: var(--gold) !important;
+    background: rgba(7, 37, 29, 0.92) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 16px rgba(197, 160, 89, 0.16) !important;
+  }
+  .hero-sov__pillar-card h2 {
+    font-size: 1.45rem !important;
+    color: var(--gold2) !important;
+    margin-bottom: 0.4rem !important;
+  }
+  .hero-sov__pillar-card p {
+    font-size: 0.88rem !important;
+    line-height: 1.55 !important;
+    color: rgba(250, 247, 240, 0.82) !important;
+  }
+  .hero-sov__pillars-dots {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .hero-sov__pillar-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(197, 160, 89, 0.3);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .hero-sov__pillar-dot.is-active {
+    width: 26px;
+    background: var(--gold);
+    box-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     ABOUT SECTION PILLARS — LUXURY MOBILE TOUCH CAROUSEL
+     ───────────────────────────────────────────────────────────── */
+  .about__pillars-carousel-wrap {
+    margin-top: 1.5rem;
+    position: relative;
+    width: 100%;
+  }
+  .pillars-lux {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.85rem !important;
+    padding: 0.5rem 1rem 1rem !important;
+    margin: 0 -1rem !important;
+    scrollbar-width: none !important;
+  }
+  .pillars-lux::-webkit-scrollbar {
+    display: none !important;
+  }
+  .pillar-lux {
+    flex: 0 0 84vw !important;
+    max-width: 340px !important;
+    scroll-snap-align: center;
+    padding: 1.4rem 1.25rem !important;
+    border-radius: 18px !important;
+    box-sizing: border-box;
+  }
+  .pillar-lux__title {
+    font-size: 1.45rem !important;
+  }
+  .pillar-lux__text {
+    font-size: 0.88rem !important;
+    line-height: 1.55 !important;
+  }
+  .pillars-dots {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.85rem;
+  }
+  .pillar-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(13, 33, 27, 0.25);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .pillar-dot.is-active {
+    width: 26px;
+    background: var(--g8);
+    box-shadow: 0 0 8px rgba(13, 33, 27, 0.3);
+  }
+
+  /* ─────────────────────────────────────────────────────────────
+     SERVICES SECTION — LUXURY PRACTICE TOUCH CAROUSEL ON MOBILE
+     ───────────────────────────────────────────────────────────── */
+  .svc-nav-wrap {
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
   .svc-nav-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.55rem;
-    margin-bottom: 1.5rem;
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.75rem !important;
+    padding: 0.35rem 1rem 0.65rem !important;
+    margin: 0 -1rem 0.25rem !important;
+    scrollbar-width: none !important;
+  }
+  .svc-nav-grid::-webkit-scrollbar {
+    display: none !important;
   }
   .svc-nav-card {
-    padding: 0.65rem 0.75rem;
-    gap: 0.55rem;
-    border-radius: 12px;
+    flex: 0 0 82vw !important;
+    max-width: 320px !important;
+    scroll-snap-align: center;
+    padding: 0.85rem 1rem !important;
+    gap: 0.75rem !important;
+    border-radius: 16px !important;
+    background: rgba(4, 24, 18, 0.75) !important;
+    border: 1px solid rgba(197, 160, 89, 0.22) !important;
+    text-align: left;
+    box-sizing: border-box;
+  }
+  .svc-nav-card.is-active {
+    background: linear-gradient(135deg, rgba(14, 54, 43, 0.96) 0%, rgba(4, 24, 18, 0.98) 100%) !important;
+    border-color: rgba(197, 160, 89, 0.8) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(197, 160, 89, 0.15) !important;
   }
   .svc-nav-card__badge {
-    width: 28px;
-    height: 28px;
-    font-size: 0.85rem;
+    width: 34px !important;
+    height: 34px !important;
+    flex: none !important;
+    border-radius: 50% !important;
   }
   .svc-nav-card__letter {
-    font-size: 0.95rem;
+    font-size: 1.02rem !important;
+  }
+  .svc-nav-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1;
+    min-width: 0;
   }
   .svc-nav-card__tag {
-    display: none;
+    display: block !important;
+    font-size: 0.65rem !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold) !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .svc-nav-card__title {
-    font-size: 0.82rem;
-    line-height: 1.25;
+    font-size: 0.92rem !important;
+    line-height: 1.3 !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    color: var(--cream) !important;
+    font-family: var(--serif) !important;
+    font-weight: 600 !important;
   }
   .svc-nav-card__icon-wrap {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
+    width: 32px !important;
+    height: 32px !important;
+    flex: none !important;
+    border-radius: 9px !important;
   }
   .svc-nav-card__icon {
-    width: 14px;
-    height: 14px;
+    width: 15px !important;
+    height: 15px !important;
+  }
+  .svc-nav-mobile-bar {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.25rem;
+    padding: 0 1rem;
+  }
+  .svc-nav-mobile-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(4, 24, 18, 0.8);
+    border: 1px solid rgba(197, 160, 89, 0.35);
+    color: var(--gold2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .svc-nav-mobile-btn:active {
+    background: rgba(197, 160, 89, 0.2);
+    transform: scale(0.92);
+  }
+  .svc-nav-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .svc-nav-dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(4, 24, 18, 0.7);
+    border: 1px solid rgba(197, 160, 89, 0.25);
+    color: rgba(236, 214, 150, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+  .svc-nav-dot__label {
+    font-family: var(--serif);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .svc-nav-dot.is-active {
+    background: var(--gold-grad);
+    border-color: transparent;
+    color: #031711;
+    font-weight: 800;
+    transform: scale(1.12);
+    box-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
   }
   .svc-dossier {
     border-radius: 18px;

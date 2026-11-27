@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Compass,
@@ -20,6 +20,28 @@ const valueIcons = [Award, ShieldCheck, Sparkles, TrendingUp, Leaf, Users]
 
 export default function About() {
   const [activePillar, setActivePillar] = useState(0)
+  const pillarsRef = useRef(null)
+
+  const handlePillarsScroll = () => {
+    if (!pillarsRef.current) return
+    const el = pillarsRef.current
+    const scrollLeft = el.scrollLeft
+    const firstCard = el.querySelector('.pillar-lux')
+    const cardWidth = firstCard ? firstCard.offsetWidth : el.offsetWidth * 0.85
+    const gap = 16
+    const newIdx = Math.round(scrollLeft / (cardWidth + gap))
+    setActivePillar(Math.min(Math.max(newIdx, 0), pillars.length - 1))
+  }
+
+  const scrollToPillar = (idx) => {
+    setActivePillar(idx)
+    if (pillarsRef.current) {
+      const cards = pillarsRef.current.querySelectorAll('.pillar-lux')
+      if (cards[idx]) {
+        cards[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+      }
+    }
+  }
 
   return (
     <section id="about" className="sec sec--cream about-sec">
@@ -146,32 +168,51 @@ export default function About() {
             </Reveal>
           </div>
 
-          <div className="pillars-lux">
-            {pillars.map((p, idx) => {
-              const isActive = activePillar === idx
-              return (
-                <div
-                  key={p.title}
-                  className={`pillar-lux ${isActive ? 'is-active' : ''}`}
-                  onClick={() => setActivePillar(idx)}
-                  onMouseEnter={() => setActivePillar(idx)}
-                  tabIndex={0}
-                  onFocus={() => setActivePillar(idx)}
-                >
-                  <div className="pillar-lux__header">
-                    <span className="pillar-lux__num">{p.num}</span>
-                    <h4 className="pillar-lux__title">{p.title}</h4>
+          <div className="about__pillars-carousel-wrap">
+            <div
+              ref={pillarsRef}
+              className="pillars-lux"
+              onScroll={handlePillarsScroll}
+            >
+              {pillars.map((p, idx) => {
+                const isActive = activePillar === idx
+                return (
+                  <div
+                    key={p.title}
+                    className={`pillar-lux ${isActive ? 'is-active' : ''}`}
+                    onClick={() => scrollToPillar(idx)}
+                    onMouseEnter={() => setActivePillar(idx)}
+                    tabIndex={0}
+                    onFocus={() => setActivePillar(idx)}
+                  >
+                    <div className="pillar-lux__header">
+                      <span className="pillar-lux__num">{p.num}</span>
+                      <h4 className="pillar-lux__title">{p.title}</h4>
+                    </div>
+                    <p className="pillar-lux__sub">{p.subtitle}</p>
+                    <p className="pillar-lux__text">{p.text}</p>
+                    <div className="pillar-lux__tags">
+                      {p.tags.map((t) => (
+                        <span key={t} className="pillar-lux__tag">{t}</span>
+                      ))}
+                    </div>
                   </div>
-                  <p className="pillar-lux__sub">{p.subtitle}</p>
-                  <p className="pillar-lux__text">{p.text}</p>
-                  <div className="pillar-lux__tags">
-                    {p.tags.map((t) => (
-                      <span key={t} className="pillar-lux__tag">{t}</span>
-                    ))}
-                  </div>
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
+
+            {/* Mobile Carousel Pagination Dots */}
+            <div className="pillars-dots" aria-label="Pillars Navigation Dots">
+              {pillars.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className={`pillar-dot ${activePillar === idx ? 'is-active' : ''}`}
+                  onClick={() => scrollToPillar(idx)}
+                  aria-label={`View pillar ${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

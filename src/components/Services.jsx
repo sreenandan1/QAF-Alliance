@@ -30,6 +30,8 @@ const icons = {
 export default function Services({ onOpenConsultation }) {
   const [activeIdx, setActiveIdx] = useState(0)
   const tabsContainerRef = useRef(null)
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
 
   const current = services[activeIdx]
   const Icon = icons[current.icon] || ShieldCheck
@@ -49,19 +51,46 @@ export default function Services({ onOpenConsultation }) {
     setActiveIdx((prev) => (prev === services.length - 1 ? 0 : prev + 1))
   }
 
-  // Auto-scroll active tab into view on mobile/tablet
-  useEffect(() => {
+  const scrollToTab = (idx) => {
     if (tabsContainerRef.current) {
-      const activeEl = tabsContainerRef.current.querySelector('.is-active')
-      if (activeEl) {
-        activeEl.scrollIntoView({
+      const cards = tabsContainerRef.current.querySelectorAll('.svc-nav-card')
+      if (cards[idx]) {
+        cards[idx].scrollIntoView({
           behavior: 'smooth',
           block: 'nearest',
           inline: 'center'
         })
       }
     }
+  }
+
+  // Auto-scroll active tab into view on mobile/tablet when activeIdx changes
+  useEffect(() => {
+    scrollToTab(activeIdx)
   }, [activeIdx])
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX
+    touchEndX.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return
+    const diff = touchStartX.current - touchEndX.current
+    if (diff > 55) {
+      // Swiped left -> next
+      handleNext()
+    } else if (diff < -55) {
+      // Swiped right -> prev
+      handlePrev()
+    }
+    touchStartX.current = 0
+    touchEndX.current = 0
+  }
 
   return (
     <section id="services" className="sec sec--dark services-sec" aria-label="Our Services">
@@ -80,9 +109,10 @@ export default function Services({ onOpenConsultation }) {
           </Reveal>
         </div>
 
-        {/* Top Executive Practice Selector Grid (All 6 Practices Visible, Balanced, No Clipping) */}
+        {/* Top Executive Practice Selector Grid (3-Col Grid on Desktop, Touch Carousel on Mobile) */}
         <div className="svc-nav-wrap">
           <div
+            ref={tabsContainerRef}
             className="svc-nav-grid"
             role="tablist"
             aria-label="Services Practice Areas"
@@ -96,7 +126,10 @@ export default function Services({ onOpenConsultation }) {
                   role="tab"
                   aria-selected={isSelected}
                   className={`svc-nav-card ${isSelected ? 'is-active' : ''}`}
-                  onClick={() => setActiveIdx(idx)}
+                  onClick={() => {
+                    setActiveIdx(idx)
+                    scrollToTab(idx)
+                  }}
                 >
                   <div className="svc-nav-card__badge">
                     <span className="svc-nav-card__letter">{item.letter}</span>
@@ -124,14 +157,55 @@ export default function Services({ onOpenConsultation }) {
               )
             })}
           </div>
+
+          {/* Mobile Carousel Navigation Bar (Pagination Dots & Arrow Controls) */}
+          <div className="svc-nav-mobile-bar" aria-label="Services Carousel Controls">
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="svc-nav-mobile-btn"
+              aria-label="Previous Practice Area"
+            >
+              <ChevronLeft size={16} />
+            </button>
+
+            <div className="svc-nav-dots" aria-label="Practice Carousel Indicator">
+              {services.map((item, idx) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`svc-nav-dot ${idx === activeIdx ? 'is-active' : ''}`}
+                  onClick={() => {
+                    setActiveIdx(idx)
+                    scrollToTab(idx)
+                  }}
+                  aria-label={`Go to Practice ${item.letter}: ${item.title}`}
+                >
+                  <span className="svc-nav-dot__label">{item.letter}</span>
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={handleNext}
+              className="svc-nav-mobile-btn"
+              aria-label="Next Practice Area"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
         </div>
 
-        {/* Main Active Practice Dossier */}
+        {/* Main Active Practice Dossier (With Mobile Swipe Gesture Support) */}
         <div className="svc-dossier-wrap">
           <AnimatePresence mode="wait">
             <motion.div
               key={current.id}
               className="svc-dossier"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}

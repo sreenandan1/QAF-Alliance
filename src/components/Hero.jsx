@@ -13,6 +13,8 @@ export default function Hero({ ready, onOpenConsultation }) {
   const [imgLoaded, setImgLoaded] = useState(false)
   const sectionRef = useRef(null)
   const portalRef = useRef(null)
+  const pillarsRef = useRef(null)
+  const [activePillar, setActivePillar] = useState(0)
 
   // Interactive mouse tracking across entire hero
   const mouseNormX = useMotionValue(0)
@@ -23,6 +25,27 @@ export default function Hero({ ready, onOpenConsultation }) {
   // 3D holographic tilt on the visual portal
   const rotateX = useTransform(springNormY, [-0.5, 0.5], [6, -6])
   const rotateY = useTransform(springNormX, [-0.5, 0.5], [-7, 7])
+
+  const handlePillarsScroll = () => {
+    if (!pillarsRef.current) return
+    const el = pillarsRef.current
+    const scrollLeft = el.scrollLeft
+    const firstCard = el.querySelector('.hero-sov__pillar-card')
+    const cardWidth = firstCard ? firstCard.offsetWidth : el.offsetWidth * 0.85
+    const gap = 16
+    const newIdx = Math.round(scrollLeft / (cardWidth + gap))
+    setActivePillar(Math.min(Math.max(newIdx, 0), pillars.length - 1))
+  }
+
+  const scrollToPillar = (idx) => {
+    setActivePillar(idx)
+    if (pillarsRef.current) {
+      const cards = pillarsRef.current.querySelectorAll('.hero-sov__pillar-card')
+      if (cards[idx]) {
+        cards[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+      }
+    }
+  }
 
   const handleMouseMove = (e) => {
     if (!sectionRef.current) return
@@ -308,25 +331,46 @@ export default function Hero({ ready, onOpenConsultation }) {
         </motion.div>
 
         {/* ─────────────────────────────────────────────────────────────
-            THE THREE PILLARS (BOTTOM CARDS)
+            THE THREE PILLARS (BOTTOM CARDS) - TOUCH CAROUSEL ON MOBILE
             ───────────────────────────────────────────────────────────── */}
-        <motion.div
-          className="hero-sov__pillars"
-          initial={{ opacity: 0, y: 25 }}
-          animate={ready ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 1.3, duration: 0.9 }}
-        >
-          {pillars.map((p) => (
-            <div key={p.title} className="hero-sov__pillar-card">
-              <div className="hero-sov__pillar-header">
-                <span className="hero-sov__pillar-num">{p.num}</span>
-                <span className="hero-sov__pillar-sub">{p.subtitle}</span>
+        <div className="hero-sov__pillars-wrap">
+          <motion.div
+            ref={pillarsRef}
+            className="hero-sov__pillars"
+            onScroll={handlePillarsScroll}
+            initial={{ opacity: 0, y: 25 }}
+            animate={ready ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 1.3, duration: 0.9 }}
+          >
+            {pillars.map((p, idx) => (
+              <div
+                key={p.title}
+                className={`hero-sov__pillar-card ${activePillar === idx ? 'is-active' : ''}`}
+                onClick={() => scrollToPillar(idx)}
+              >
+                <div className="hero-sov__pillar-header">
+                  <span className="hero-sov__pillar-num">{p.num}</span>
+                  <span className="hero-sov__pillar-sub">{p.subtitle}</span>
+                </div>
+                <h2>{p.title}</h2>
+                <p>{p.text}</p>
               </div>
-              <h2>{p.title}</h2>
-              <p>{p.text}</p>
-            </div>
-          ))}
-        </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Mobile pagination dots indicator */}
+          <div className="hero-sov__pillars-dots" aria-label="Hero Pillars Navigation">
+            {pillars.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                className={`hero-sov__pillar-dot ${activePillar === idx ? 'is-active' : ''}`}
+                onClick={() => scrollToPillar(idx)}
+                aria-label={`View pillar ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
