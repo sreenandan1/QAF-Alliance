@@ -466,6 +466,14 @@ h1, h2, h3, h4 {
   overflow: hidden;
 }
 
+.hero-sov__bg-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
 .hero-sov__bg-img {
   width: 100%;
   height: 100%;
@@ -3760,8 +3768,21 @@ h1, h2, h3, h4 {
 
   /* Sovereign Hero Mobile Experience */
   .hero--sovereign {
-    padding: 5.6rem 0 3rem;
-    min-height: auto;
+    padding: clamp(5.2rem, 9vh, 6.2rem) 1.25rem 2.5rem;
+    min-height: 100svh;
+  }
+  .hero-sov__bg-radial {
+    display: none;
+  }
+  .hero-sov__bg-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(2, 17, 12, 0.72) 0%,
+      rgba(2, 17, 12, 0.35) 28%,
+      rgba(2, 17, 12, 0.15) 55%,
+      rgba(2, 17, 12, 0.45) 85%,
+      #02110c 100%
+    );
   }
   .hero-sov__seal {
     max-width: 95%;

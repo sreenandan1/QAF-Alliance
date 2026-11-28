@@ -21,15 +21,21 @@ export default function Hero({ ready, onOpenConsultation }) {
     >
       {/* Grand Sovereign Hero Background Image & Luxury Atmospheric Grading */}
       <div className="hero-sov__bg" aria-hidden="true">
-        <img
-          src={assetUrl('images/hero-bg.jpg')}
-          alt="QAF Alliance UAE Corporate Advisory & Food Science"
-          className="hero-sov__bg-img"
-          onError={(e) => {
-            e.target.onerror = null
-            e.target.src = assetUrl('images/hero-luxury.jpg')
-          }}
-        />
+        <picture className="hero-sov__bg-picture">
+          <source
+            media="(max-width: 768px)"
+            srcSet={assetUrl('images/hero-bg-mobile.jpg')}
+          />
+          <img
+            src={assetUrl('images/hero-bg.jpg')}
+            alt="QAF Alliance UAE Corporate Advisory & Food Science"
+            className="hero-sov__bg-img"
+            onError={(e) => {
+              e.target.onerror = null
+              e.target.src = assetUrl('images/hero-luxury.jpg')
+            }}
+          />
+        </picture>
         <div className="hero-sov__bg-overlay" />
         <div className="hero-sov__bg-radial" />
         <div className="hero-sov__bg-vignette" />
