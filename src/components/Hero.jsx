@@ -34,6 +34,8 @@ export default function Hero({ ready, onOpenConsultation }) {
         <div className="hero-sov__bg-radial" />
         <div className="hero-sov__bg-vignette" />
         <div className="hero-sov__bg-lateral-fade" />
+        <div className="hero-sov__bg-gold-arc" />
+        <div className="hero-sov__bg-gold-glow" />
       </div>
 
       <div className="wrap hero-sov__content-wrap">

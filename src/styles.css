@@ -481,10 +481,11 @@ h1, h2, h3, h4 {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(2, 17, 12, 0.78) 0%,
-    rgba(2, 17, 12, 0.22) 16%,
-    rgba(2, 17, 12, 0.32) 48%,
-    rgba(2, 17, 12, 0.82) 84%,
+    rgba(2, 17, 12, 0.82) 0%,
+    rgba(2, 17, 12, 0.2) 16%,
+    rgba(2, 17, 12, 0.15) 35%,
+    rgba(2, 17, 12, 0.35) 65%,
+    rgba(2, 17, 12, 0.85) 88%,
     #02110c 100%
   );
   pointer-events: none;
@@ -495,9 +496,10 @@ h1, h2, h3, h4 {
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    ellipse 850px 520px at 50% 36%,
-    rgba(3, 23, 17, 0.35) 0%,
-    transparent 75%
+    ellipse 920px 580px at 50% 40%,
+    rgba(2, 17, 12, 0.45) 0%,
+    rgba(2, 17, 12, 0.22) 55%,
+    transparent 82%
   );
   pointer-events: none;
 }
@@ -507,25 +509,57 @@ h1, h2, h3, h4 {
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    ellipse at 50% 50%,
-    transparent 55%,
-    rgba(1, 12, 9, 0.45) 100%
+    ellipse 120% 100% at 50% 50%,
+    transparent 48%,
+    rgba(1, 14, 10, 0.35) 75%,
+    rgba(1, 12, 9, 0.65) 100%
   );
   pointer-events: none;
 }
 
-/* Luxury Left & Right Lateral Edge Fades */
+/* Luxury Left & Right Lateral Edge Fades (Dual-Layer Cinematic Gradients) */
 .hero-sov__bg-lateral-fade {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     90deg,
-    rgba(2, 17, 12, 0.4) 0%,
-    transparent 12%,
-    transparent 88%,
-    rgba(2, 17, 12, 0.4) 100%
+    rgba(2, 17, 12, 0.85) 0%,
+    rgba(2, 17, 12, 0.52) 10%,
+    rgba(2, 17, 12, 0.18) 22%,
+    transparent 32%,
+    transparent 68%,
+    rgba(2, 17, 12, 0.18) 78%,
+    rgba(2, 17, 12, 0.52) 90%,
+    rgba(2, 17, 12, 0.85) 100%
   );
   pointer-events: none;
+}
+
+/* Warm Golden Atmospheric Arc & Streaks */
+.hero-sov__bg-gold-arc {
+  position: absolute;
+  top: 15%;
+  left: -8%;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  border: 1px solid rgba(197, 160, 89, 0.18);
+  box-shadow: 0 0 80px rgba(197, 160, 89, 0.08), inset 0 0 60px rgba(197, 160, 89, 0.05);
+  pointer-events: none;
+  opacity: 0.7;
+  filter: blur(2px);
+}
+
+.hero-sov__bg-gold-glow {
+  position: absolute;
+  top: 25%;
+  right: -5%;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(40px);
 }
 
 /* ==========================================================================
