@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import Lenis from 'lenis'
 import Loader from './components/Loader.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
-import InteractiveCursorGlow from './components/InteractiveCursorGlow.jsx'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
 import About from './components/About.jsx'
@@ -50,7 +49,6 @@ export default function App() {
     <>
       <Loader done={ready} />
       <ScrollProgress />
-      <InteractiveCursorGlow />
       <Navbar onOpenConsultation={handleOpenConsultation} />
       <main id="top">
         <Hero ready={ready} onOpenConsultation={handleOpenConsultation} />

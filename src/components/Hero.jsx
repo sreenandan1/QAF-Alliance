@@ -1,8 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { ShieldCheck, Award, ArrowRight, CheckCircle2, Sparkles, Star } from 'lucide-react'
-import QMark from './QMark.jsx'
-import HeroBackground from './HeroBackground.jsx'
 import { pillars, site } from '../data/content.js'
 import { assetUrl } from '../utils/asset.js'
 
@@ -87,8 +85,21 @@ export default function Hero({ ready, onOpenConsultation }) {
       onMouseLeave={handleMouseLeave}
       aria-label="QAF Alliance - Assurance • Innovation • Sustainability"
     >
-      {/* Light rays + gold specks canvas background */}
-      <HeroBackground />
+      {/* Grand Sovereign Hero Background Image & Luxury Atmospheric Grading */}
+      <div className="hero-sov__bg" aria-hidden="true">
+        <img
+          src={assetUrl('images/hero-bg.jpg')}
+          alt=""
+          className="hero-sov__bg-img"
+          onError={(e) => {
+            e.target.onerror = null
+            e.target.src = assetUrl('images/hero-luxury.jpg')
+          }}
+        />
+        <div className="hero-sov__bg-overlay" />
+        <div className="hero-sov__bg-radial" />
+        <div className="hero-sov__bg-vignette" />
+      </div>
 
       <div className="wrap hero-sov__wrap" style={{ position: 'relative', zIndex: 10 }}>
         {/* Top Royal Accreditation Seal Pill */}
@@ -238,11 +249,6 @@ export default function Hero({ ready, onOpenConsultation }) {
           animate={ready ? { opacity: 1, scale: 1, y: 0 } : {}}
           transition={{ delay: 0.5, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Ambient 3D Rotating Brand Mark Behind Stage */}
-          <div className="hero-sov__qmark-backdrop" aria-hidden="true">
-            <QMark play={ready} />
-          </div>
-
           {/* Masterpiece Portal with 3D Parallax & Metallic Gold Double Rim */}
           <motion.div
             ref={portalRef}
