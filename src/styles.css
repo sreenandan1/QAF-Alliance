@@ -502,6 +502,22 @@ h1, h2, h3, h4 {
   );
 }
 
+/* Luxury Left & Right Lateral Edge Fades */
+.hero-sov__bg-lateral-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 17, 12, 0.88) 0%,
+    rgba(2, 17, 12, 0.4) 8%,
+    transparent 20%,
+    transparent 80%,
+    rgba(2, 17, 12, 0.4) 92%,
+    rgba(2, 17, 12, 0.88) 100%
+  );
+  pointer-events: none;
+}
+
 /* Sovereign Container */
 .hero-sov__wrap {
   position: relative;
@@ -1194,27 +1210,30 @@ h1, h2, h3, h4 {
   gap: 0.95rem;
   padding: 0.95rem 1.15rem;
   border-radius: 16px;
-  background: rgba(4, 24, 18, 0.72);
+  background: rgba(4, 24, 18, 0.65);
   border: 1px solid rgba(197, 160, 89, 0.2);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   cursor: pointer;
   text-align: left;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  opacity: 0.72;
 }
 
 .svc-nav-card:hover {
-  background: rgba(14, 54, 43, 0.65);
-  border-color: rgba(197, 160, 89, 0.45);
+  opacity: 0.95;
+  background: rgba(14, 54, 43, 0.75);
+  border-color: rgba(197, 160, 89, 0.5);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .svc-nav-card.is-active {
+  opacity: 1;
   background: linear-gradient(135deg, rgba(14, 54, 43, 0.95) 0%, rgba(4, 24, 18, 0.98) 100%);
-  border-color: rgba(197, 160, 89, 0.65);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 0 20px rgba(197, 160, 89, 0.12);
+  border-color: rgba(197, 160, 89, 0.75);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 0 20px rgba(197, 160, 89, 0.16);
 }
 
 .svc-nav-card__badge {
@@ -2715,13 +2734,32 @@ h1, h2, h3, h4 {
   color: var(--ink);
 }
 
-/* Marquee Ticker */
+/* Marquee Ticker with Luxury Left/Right Edge Fades */
 .marquee-lux {
   margin-top: clamp(4rem, 7vw, 6.5rem);
   overflow: hidden;
   border-block: 1px solid rgba(13, 33, 27, 0.15);
   padding: 1.6rem 0;
   background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 24px,
+    #000 100px,
+    #000 calc(100% - 100px),
+    rgba(0, 0, 0, 0.25) calc(100% - 24px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 24px,
+    #000 100px,
+    #000 calc(100% - 100px),
+    rgba(0, 0, 0, 0.25) calc(100% - 24px),
+    transparent 100%
+  );
 }
 
 .marquee__header {
@@ -3138,6 +3176,24 @@ h1, h2, h3, h4 {
     scrollbar-width: none;
     padding: 0.25rem 0.2rem 0.65rem;
     margin: 0;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 14px,
+      #000 36px,
+      #000 calc(100% - 36px),
+      rgba(0, 0, 0, 0.3) calc(100% - 14px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 14px,
+      #000 36px,
+      #000 calc(100% - 36px),
+      rgba(0, 0, 0, 0.3) calc(100% - 14px),
+      transparent 100%
+    );
   }
 
   .train__domain-tabs::-webkit-scrollbar {
@@ -3158,10 +3214,12 @@ h1, h2, h3, h4 {
     font-size: 0.82rem;
     font-weight: 600;
     box-shadow: 0 2px 8px rgba(7, 37, 29, 0.04);
-    transition: all 0.2s var(--ease);
+    transition: all 0.25s var(--ease);
+    opacity: 0.72;
   }
 
   .train__domain-btn.is-active {
+    opacity: 1;
     background: var(--g8);
     border-color: var(--gold);
     color: var(--cream);
@@ -3757,12 +3815,30 @@ h1, h2, h3, h4 {
   }
 
   /* ─────────────────────────────────────────────────────────────
-     HERO THREE PILLARS — LUXURY MOBILE TOUCH CAROUSEL
+     HERO THREE PILLARS — LUXURY MOBILE TOUCH CAROUSEL WITH LEFT/RIGHT FADE & PEEK
      ───────────────────────────────────────────────────────────── */
   .hero-sov__pillars-wrap {
     margin-top: 1.5rem;
     position: relative;
     width: 100%;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.4) 14px,
+      #000 44px,
+      #000 calc(100% - 44px),
+      rgba(0, 0, 0, 0.4) calc(100% - 14px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.4) 14px,
+      #000 44px,
+      #000 calc(100% - 44px),
+      rgba(0, 0, 0, 0.4) calc(100% - 14px),
+      transparent 100%
+    );
   }
   .hero-sov__pillars {
     display: flex !important;
@@ -3771,7 +3847,8 @@ h1, h2, h3, h4 {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     gap: 0.85rem !important;
-    padding: 0.5rem 1rem 1rem !important;
+    scroll-padding: 0 10vw !important;
+    padding: 0.5rem 10vw 1rem !important;
     margin: 0 -1rem !important;
     scrollbar-width: none !important;
     border-top: 1px solid rgba(197, 160, 89, 0.2);
@@ -3780,22 +3857,26 @@ h1, h2, h3, h4 {
     display: none !important;
   }
   .hero-sov__pillar-card {
-    flex: 0 0 84vw !important;
-    max-width: 340px !important;
+    flex: 0 0 78vw !important;
+    max-width: 320px !important;
     scroll-snap-align: center;
     padding: 1.35rem 1.25rem !important;
     border-radius: 18px !important;
-    background: rgba(4, 24, 18, 0.8) !important;
+    background: rgba(4, 24, 18, 0.72) !important;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(197, 160, 89, 0.25) !important;
+    border: 1px solid rgba(197, 160, 89, 0.2) !important;
     box-sizing: border-box;
-    transition: all 0.3s ease;
+    opacity: 0.48;
+    transform: scale(0.94);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
   .hero-sov__pillar-card.is-active {
+    opacity: 1 !important;
+    transform: scale(1) !important;
     border-color: var(--gold) !important;
-    background: rgba(7, 37, 29, 0.92) !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 16px rgba(197, 160, 89, 0.16) !important;
+    background: rgba(7, 37, 29, 0.94) !important;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 22px rgba(197, 160, 89, 0.22) !important;
   }
   .hero-sov__pillar-card h2 {
     font-size: 1.45rem !important;
@@ -3832,12 +3913,30 @@ h1, h2, h3, h4 {
   }
 
   /* ─────────────────────────────────────────────────────────────
-     ABOUT SECTION PILLARS — LUXURY MOBILE TOUCH CAROUSEL
+     ABOUT SECTION PILLARS — LUXURY MOBILE TOUCH CAROUSEL WITH FADE & PEEK
      ───────────────────────────────────────────────────────────── */
   .about__pillars-carousel-wrap {
     margin-top: 1.5rem;
     position: relative;
     width: 100%;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.4) 14px,
+      #000 42px,
+      #000 calc(100% - 42px),
+      rgba(0, 0, 0, 0.4) calc(100% - 14px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.4) 14px,
+      #000 42px,
+      #000 calc(100% - 42px),
+      rgba(0, 0, 0, 0.4) calc(100% - 14px),
+      transparent 100%
+    );
   }
   .pillars-lux {
     display: flex !important;
@@ -3846,7 +3945,8 @@ h1, h2, h3, h4 {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     gap: 0.85rem !important;
-    padding: 0.5rem 1rem 1rem !important;
+    scroll-padding: 0 10vw !important;
+    padding: 0.5rem 10vw 1rem !important;
     margin: 0 -1rem !important;
     scrollbar-width: none !important;
   }
@@ -3854,12 +3954,20 @@ h1, h2, h3, h4 {
     display: none !important;
   }
   .pillar-lux {
-    flex: 0 0 84vw !important;
-    max-width: 340px !important;
+    flex: 0 0 78vw !important;
+    max-width: 320px !important;
     scroll-snap-align: center;
     padding: 1.4rem 1.25rem !important;
     border-radius: 18px !important;
     box-sizing: border-box;
+    opacity: 0.48;
+    transform: scale(0.94);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .pillar-lux.is-active {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    box-shadow: 0 16px 36px rgba(7, 37, 29, 0.25) !important;
   }
   .pillar-lux__title {
     font-size: 1.45rem !important;
@@ -3892,11 +4000,29 @@ h1, h2, h3, h4 {
   }
 
   /* ─────────────────────────────────────────────────────────────
-     SERVICES SECTION — LUXURY PRACTICE TOUCH CAROUSEL ON MOBILE
+     SERVICES SECTION — LUXURY PRACTICE TOUCH CAROUSEL WITH FADE & PEEK
      ───────────────────────────────────────────────────────────── */
   .svc-nav-wrap {
     margin-bottom: 1.25rem;
     position: relative;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.4) 14px,
+      #000 42px,
+      #000 calc(100% - 42px),
+      rgba(0, 0, 0, 0.4) calc(100% - 14px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.4) 14px,
+      #000 42px,
+      #000 calc(100% - 42px),
+      rgba(0, 0, 0, 0.4) calc(100% - 14px),
+      transparent 100%
+    );
   }
   .svc-nav-grid {
     display: flex !important;
@@ -3905,7 +4031,8 @@ h1, h2, h3, h4 {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     gap: 0.75rem !important;
-    padding: 0.35rem 1rem 0.65rem !important;
+    scroll-padding: 0 11vw !important;
+    padding: 0.35rem 11vw 0.65rem !important;
     margin: 0 -1rem 0.25rem !important;
     scrollbar-width: none !important;
   }
@@ -3913,21 +4040,26 @@ h1, h2, h3, h4 {
     display: none !important;
   }
   .svc-nav-card {
-    flex: 0 0 82vw !important;
-    max-width: 320px !important;
+    flex: 0 0 76vw !important;
+    max-width: 300px !important;
     scroll-snap-align: center;
     padding: 0.85rem 1rem !important;
     gap: 0.75rem !important;
     border-radius: 16px !important;
-    background: rgba(4, 24, 18, 0.75) !important;
-    border: 1px solid rgba(197, 160, 89, 0.22) !important;
+    background: rgba(4, 24, 18, 0.72) !important;
+    border: 1px solid rgba(197, 160, 89, 0.2) !important;
     text-align: left;
     box-sizing: border-box;
+    opacity: 0.48;
+    transform: scale(0.94);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
   .svc-nav-card.is-active {
-    background: linear-gradient(135deg, rgba(14, 54, 43, 0.96) 0%, rgba(4, 24, 18, 0.98) 100%) !important;
-    border-color: rgba(197, 160, 89, 0.8) !important;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(197, 160, 89, 0.15) !important;
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    background: linear-gradient(135deg, rgba(14, 54, 43, 0.98) 0%, rgba(4, 24, 18, 0.98) 100%) !important;
+    border-color: rgba(197, 160, 89, 0.85) !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), inset 0 0 16px rgba(197, 160, 89, 0.18) !important;
   }
   .svc-nav-card__badge {
     width: 34px !important;

@@ -99,6 +99,7 @@ export default function Hero({ ready, onOpenConsultation }) {
         <div className="hero-sov__bg-overlay" />
         <div className="hero-sov__bg-radial" />
         <div className="hero-sov__bg-vignette" />
+        <div className="hero-sov__bg-lateral-fade" />
       </div>
 
       <div className="wrap hero-sov__wrap" style={{ position: 'relative', zIndex: 10 }}>

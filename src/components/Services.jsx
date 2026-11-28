@@ -32,6 +32,8 @@ export default function Services({ onOpenConsultation }) {
   const tabsContainerRef = useRef(null)
   const touchStartX = useRef(0)
   const touchEndX = useRef(0)
+  const isProgrammaticScroll = useRef(false)
+  const navScrollTimeout = useRef(null)
 
   const current = services[activeIdx]
   const Icon = icons[current.icon] || ShieldCheck
@@ -55,13 +57,35 @@ export default function Services({ onOpenConsultation }) {
     if (tabsContainerRef.current) {
       const cards = tabsContainerRef.current.querySelectorAll('.svc-nav-card')
       if (cards[idx]) {
+        isProgrammaticScroll.current = true
         cards[idx].scrollIntoView({
           behavior: 'smooth',
           block: 'nearest',
           inline: 'center'
         })
+        setTimeout(() => {
+          isProgrammaticScroll.current = false
+        }, 350)
       }
     }
+  }
+
+  const handleNavScroll = () => {
+    if (isProgrammaticScroll.current) return
+    if (navScrollTimeout.current) clearTimeout(navScrollTimeout.current)
+    navScrollTimeout.current = setTimeout(() => {
+      if (!tabsContainerRef.current) return
+      const el = tabsContainerRef.current
+      const firstCard = el.querySelector('.svc-nav-card')
+      if (!firstCard) return
+      const cardWidth = firstCard.offsetWidth
+      const gap = 12
+      const scrollLeft = el.scrollLeft
+      const newIdx = Math.round(scrollLeft / (cardWidth + gap))
+      if (newIdx >= 0 && newIdx < services.length && newIdx !== activeIdx) {
+        setActiveIdx(newIdx)
+      }
+    }, 90)
   }
 
   // Auto-scroll active tab into view on mobile/tablet when activeIdx changes
@@ -114,6 +138,7 @@ export default function Services({ onOpenConsultation }) {
           <div
             ref={tabsContainerRef}
             className="svc-nav-grid"
+            onScroll={handleNavScroll}
             role="tablist"
             aria-label="Services Practice Areas"
           >
