@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Sparkles, ShieldCheck, Award } from 'lucide-react'
 import { site } from '../data/content.js'
 import { assetUrl } from '../utils/asset.js'
 
@@ -34,9 +34,49 @@ export default function Hero({ ready, onOpenConsultation }) {
         <div className="hero-sov__bg-radial" />
         <div className="hero-sov__bg-vignette" />
         <div className="hero-sov__bg-lateral-fade" />
-        <div className="hero-sov__bg-gold-arc" />
-        <div className="hero-sov__bg-gold-glow" />
       </div>
+
+      {/* Floating Left Flank Badge — Regulatory Acumen & Heritage */}
+      <motion.div
+        className="hero-sov__flank hero-sov__flank--left"
+        initial={{ opacity: 0, x: -35 }}
+        animate={ready ? { opacity: 1, x: 0 } : {}}
+        transition={{ delay: 1.05, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        onClick={handleConsultClick}
+        role="button"
+        tabIndex={0}
+        aria-label="Regulatory Acumen - Click to Request Consultation"
+      >
+        <div className="flank-icon-box flank-icon-box--emerald">
+          <ShieldCheck size={20} />
+        </div>
+        <div className="flank-content">
+          <span className="flank-label">Regulatory Acumen</span>
+          <span className="flank-title">HACCP & ISO 22000</span>
+          <span className="flank-detail">Compliance &bull; Audits &bull; FSMS</span>
+        </div>
+      </motion.div>
+
+      {/* Floating Right Flank Badge — UAE Vision & Sustainable Impact */}
+      <motion.div
+        className="hero-sov__flank hero-sov__flank--right"
+        initial={{ opacity: 0, x: 35 }}
+        animate={ready ? { opacity: 1, x: 0 } : {}}
+        transition={{ delay: 1.2, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        onClick={handleConsultClick}
+        role="button"
+        tabIndex={0}
+        aria-label="UAE Vision & Sustainability - Click to Request Consultation"
+      >
+        <div className="flank-icon-box flank-icon-box--gold">
+          <Award size={20} />
+        </div>
+        <div className="flank-content">
+          <span className="flank-label">UAE Vision & Impact</span>
+          <span className="flank-title">Sustainability & ESG</span>
+          <span className="flank-detail">112K+ Plastics Diverted</span>
+        </div>
+      </motion.div>
 
       <div className="wrap hero-sov__content-wrap">
         {/* Top Royal Accreditation Seal Pill */}
