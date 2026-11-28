@@ -4,6 +4,7 @@ import Loader from './components/Loader.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
+import Showcase from './components/Showcase.jsx'
 import About from './components/About.jsx'
 import Services from './components/Services.jsx'
 import Industries from './components/Industries.jsx'
@@ -52,6 +53,7 @@ export default function App() {
       <Navbar onOpenConsultation={handleOpenConsultation} />
       <main id="top">
         <Hero ready={ready} onOpenConsultation={handleOpenConsultation} />
+        <Showcase onOpenConsultation={handleOpenConsultation} />
         <About />
         <Services onOpenConsultation={handleOpenConsultation} />
         <Industries onOpenConsultation={handleOpenConsultation} />

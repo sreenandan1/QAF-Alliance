@@ -426,10 +426,13 @@ h1, h2, h3, h4 {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: var(--cream);
   overflow: hidden;
-  padding: 0;
+  padding: 8.5rem 1.5rem 4rem;
   background: #02110c;
+  box-sizing: border-box;
 }
 
 .hero--sovereign::before {
@@ -441,23 +444,6 @@ h1, h2, h3, h4 {
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   z-index: 1;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   1. PRIMARY HERO VIEWPORT STAGE (100svh Hero with Unsplash Dubai BG)
-   ───────────────────────────────────────────────────────────── */
-.hero-sov__viewport-stage {
-  position: relative;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  padding: 7.5rem 1.5rem 3.5rem;
-  box-sizing: border-box;
-  overflow: hidden;
 }
 
 .hero-sov__content-wrap {
@@ -542,20 +528,33 @@ h1, h2, h3, h4 {
   pointer-events: none;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   2. CREDIBILITY SHOWCASE (PORTAL CENTERPIECE & THREE PILLARS)
-   ───────────────────────────────────────────────────────────── */
-.hero-sov__showcase-stage {
+/* ==========================================================================
+   SHOWCASE SECTION — SOVEREIGN FOUNDATIONS & THREE PILLARS (STANDALONE)
+   ========================================================================== */
+
+.showcase-sec {
   position: relative;
-  z-index: 2;
-  width: 100%;
-  background: #02110c;
-  padding: 1.5rem 0 5rem;
+  background: linear-gradient(180deg, #02110c 0%, #031913 50%, #02110c 100%);
+  padding: clamp(5rem, 8vw, 7rem) 0 clamp(4.5rem, 7vw, 6.5rem);
+  overflow: hidden;
+  border-top: 1px solid rgba(197, 160, 89, 0.2);
+  border-bottom: 1px solid rgba(197, 160, 89, 0.12);
 }
 
-.hero-sov__showcase-wrap {
+.showcase-sec::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  z-index: 1;
+}
+
+.showcase-wrap {
   position: relative;
-  z-index: 10;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
